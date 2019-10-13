@@ -13,10 +13,12 @@ const port = process.env.PORT || 4000;
 const server = new http.Server(app);
 const MongoDBStore = require("connect-mongodb-session")(session);
 
+server.listen(port, () => {
+	console.log(`Server running on port ${port}`);
+});
+
 export const mongo_uri = "mongodb://localhost:27017/tbsaathi";
 export const connect = mongoose.connect(mongo_uri);
-
-app.set("views", __dirname + "/views");
 
 app.use("/static", express.static("static"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,7 +34,20 @@ app.use(
 		})
 	})
 );
+app.set("views", __dirname + "/views");
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
+
+app.get("/", (req,res) => {
+	res.render("index.html");
+});
+app.get("/inputs", (req, res) => {
+	res.render("inputs.html");
+});
+app.get("register", (req, res) => {
+	res.render("register.html")
+})
 app.use("/auth", authRoutes);
 app.use("/doctor", docRoutes);
 // app.use("/volunteer", volunteerRoutes);

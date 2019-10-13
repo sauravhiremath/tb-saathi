@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { Binary } from "crypto";
 const schema = mongoose.Schema;
 
 interface patientInterface extends mongoose.Document {
@@ -7,6 +8,7 @@ interface patientInterface extends mongoose.Document {
     aadhaar: number,
     address: address[],
     report: report[],
+    comment: string,
     reportPhoto: string,
     xrays: string
 };
@@ -35,6 +37,10 @@ const patientSchema = new Schema({
         type: Array,
         default: []
     },
+    comment: {
+        type: String,
+        default: "None"
+    },
     reportPhoto: {
         data: Buffer, 
         contentType: String
@@ -47,13 +53,13 @@ const patientSchema = new Schema({
 
 interface address {
     houseNo: string,
-    village: string
+    village: string,
+    zipcode: string
 };
 
 interface report {
     age: number,
-    sex: number,
-    gender: number,
+    sex: string,
     everSmoker: number,
     everDrinker: number,
     sputum: number,

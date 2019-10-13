@@ -3,6 +3,8 @@ import session from "express-session";
 import Patient from "../models/patient";
 import util from "util";
 import formidable from "formidable";
+const exec = util.promisify(require('child_process').exec);
+
 
 const router = Router();
 export default router;
@@ -16,20 +18,22 @@ router.post("/patientResponse", userReq, async (req, res) => {
 	const addressVillage = req.body.addressVillage;
 	const xray = req.body.xray;
 
-	const age = req.body.age;
-	const sex = req.body.sex;
-	const gender = req.body.gender;
-	const everSmoker = req.body.everSmoker;
-	const everDrinker = req.body.everDrinker;
-	const sputum = req.body.sputum;
-	const coughWeeks = req.body.coughWeeks;
-	const fever = req.body.fever;
-	const nightSweats = req.body.nightSweats;
-	const weightLoss = req.body.weightLoss;
-	const chestPain = req.body.chestPain;
-	const hardBreath = req.body.hardBreath;
-	const height = req.body.height;
-	const weight = req.body.weight;
+    const report = {
+        age: req.body.age,
+        sex: req.body.sex,
+        gender: req.body.gender,
+        everSmoker: req.body.everSmoker,
+        everDrinker: req.body.everDrinker,
+        sputum: req.body.sputum,
+        coughWeeks: req.body.coughWeeks,
+        fever: req.body.fever,
+        nightSweats: req.body.nightSweats,
+        weightLoss: req.body.weightLoss,
+        chestPain: req.body.chestPain,
+        hardBreath: req.body.hardBreath,
+        height: req.body.height,
+        weight: req.body.weight,
+    }
 
 	var form = new formidable.IncomingForm();
 	form.parse(xray);
@@ -46,22 +50,7 @@ router.post("/patientResponse", userReq, async (req, res) => {
 		{ aadhaar },
 		{
 			$push: {
-				report: {
-					age: age,
-					sex: sex,
-					gender: gender,
-					everSmoker: everSmoker,
-					everDrinker: everDrinker,
-					sputum: sputum,
-					coughWeeks: coughWeeks,
-					fever: fever,
-					nightSweats: nightSweats,
-					weightLoss: weightLoss,
-					chestPain: chestPain,
-					hardBreath: hardBreath,
-					height: height,
-					weight: weight
-				}
+				report: report
 			}
 		}
 	);
@@ -75,26 +64,14 @@ router.post("/patientResponse", userReq, async (req, res) => {
 				houseNo: addressHouseNo,
 				village: addressVillage
 			},
-			report: {
-				age: age,
-				sex: sex,
-				gender: gender,
-				everSmoker: everSmoker,
-				everDrinker: everDrinker,
-				sputum: sputum,
-				coughWeeks: coughWeeks,
-				fever: fever,
-				nightSweats: nightSweats,
-				weightLoss: weightLoss,
-				chestPain: chestPain,
-				hardBreath: hardBreath,
-				height: height,
-				weight: weight
-			}
+			report: report
 		});
 	}
 
-	// Get data visualisations and send
+    // Get data visualisations and send
+    const {stdout,stderr} = await exec('python ./routes/script.py '+ report );
+    console.log(stdout);
+    console.log(stderr);
 	// Send the response to PHC
 	res.json({
 		success: true,
