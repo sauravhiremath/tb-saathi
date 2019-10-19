@@ -20,7 +20,7 @@
 <body class="bg-light">
   <div class="container">
     <div class="py-5 text-center">
-      <a href=""><img class="d-block mx-auto mb-4" src="static/images/logo.png" alt="" width="256" height="256"></a>
+      <a href="/"><img class="d-block mx-auto mb-4" src="static/images/logo.png" alt="" width="256" height="256"></a>
       <h2>TB Saathi</h2>
       <p class="lead">Report patient problems.</p>
     </div>
@@ -29,7 +29,7 @@
     </div>
     <div class="col-md-12 order-md-1">
       <h4 class="mb-3">Details</h4>
-      <form class="needs-validation" novalidate="" action="inputs.php" method="post">
+      <form class="needs-validation" novalidate="" action="/doctor/patientResponse" method="post">
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="firstName">First name</label>
@@ -47,7 +47,7 @@
         </div>
         <div class="mb-3">
           <label for="number">Phone Number <span class="text-muted">(Optional)</span></label>
-          <input type="email" class="form-control" name="number" placeholder="10 digit number">
+          <input type="number" class="form-control" name="number" placeholder="10 digit number">
           <div class="invalid-feedback">
             Please enter a valid phone number shipping updates.
           </div>
@@ -108,18 +108,16 @@
         </div>
         <div class="mb-3">
           <label for="symptoms">Symptoms</label><br>
-          <input value="Persisten Dry Cough" type="checkbox"> Persistent Dry Cough<br>
-          <input type="checkbox" value="Low Appetite"> Low Appetite<br>
-          <input type="checkbox" value="everSmoker"> Ever Smoker<br>
-          <input type="checkbox" value="everDrinker"> Ever Drinker<br>
-          <input type="checkbox" value="sputum"> Sputum Cough Occured<br>
-          <input type="checkbox" value="fever"> Fever<br>
-          <input type="checkbox" value="nightSweats"> Night Sweats<br>
-          <input type="checkbox" value="weightLoss"> Weight Loss<br>
-          <input type="checkbox" value="chestPain">Chest Pain <br>
+          <input type="checkbox" value="everSmoker" name="everSmoker"> Ever Smoker<br>
+          <input type="checkbox" value="everDrinker" name="everDrinker"> Ever Drinker<br>
+          <input type="checkbox" value="sputum" name="sputum"> Sputum Cough Occured<br>
+          <input type="checkbox" value="fever" name="fever"> Fever<br>
+          <input type="checkbox" value="nightSweats" name="nightSweats"> Night Sweats<br>
+          <input type="checkbox" value="weightLoss" name="weightLoss"> Weight Loss<br>
+          <input type="checkbox" value="chestPain" name="chestPain">Chest Pain <br>
           No of weeks of cough <input style="width:20px; height: 25px;" type="input" name="coughWeeks" maxlength="1"><br>
-          Height <input type="input" placeholder="in cms" size="3px"><br>
-          Weight <input type="input" placeholder="in kgs" size="3px"><br>
+          Height <input type="input" placeholder="in cms" size="3px" name="height"><br>
+          Weight <input type="input" placeholder="in kgs" size="3px" name="weight"><br>
         </div>
         <div class="mb-3">
           <label for="Comments">Additional Comments</label>

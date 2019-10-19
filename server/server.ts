@@ -45,7 +45,7 @@ app.get("/", (req,res) => {
 app.get("/inputs", (req, res) => {
 	res.render("inputs.html");
 });
-app.get("register", (req, res) => {
+app.get("/register", (req, res) => {
 	res.render("register.html")
 })
 app.use("/auth", authRoutes);
